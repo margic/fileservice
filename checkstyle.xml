@@ -109,7 +109,10 @@
 
         <!-- Checks for Size Violations.                    -->
         <!-- See http://checkstyle.sf.net/config_sizes.html -->
-        <module name="LineLength"/>
+        <module name="LineLength">
+            <!-- 80 is too short we're not mainframers" -->
+            <property name="max" value="120"/>
+        </module>
         <module name="MethodLength"/>
         <module name="ParameterNumber"/>
 

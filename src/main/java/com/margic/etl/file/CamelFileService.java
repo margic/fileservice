@@ -25,7 +25,6 @@ public final class CamelFileService {
         log.info("Starting Camel File Service");
 
         Injector injector = Guice.createInjector(new FileModule());
-
     }
 
 }
