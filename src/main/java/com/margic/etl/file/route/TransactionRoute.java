@@ -2,6 +2,7 @@ package com.margic.etl.file.route;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.camel.Exchange;
 import org.apache.camel.PropertyInject;
 import org.apache.camel.builder.RouteBuilder;
 
@@ -23,6 +24,7 @@ public class TransactionRoute extends RouteBuilder {
     @Override
     public final void configure() throws Exception {
         from("direct:transaction")
+                .setHeader(Exchange.HTTP_METHOD, constant("POST"))
                 .to(toUri);
     }
 }
