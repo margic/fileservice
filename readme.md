@@ -14,3 +14,11 @@ DOCKER_CERT_PATH=/Users/user/.docker/machine/machines/default
 
 Run the docker build using `mvn docker:build`
 To run a container from the image `docker run -it --rm  margic/file-service`
+
+
+##Quickstart
+To run the complete services use the docker compose file in the docker folder
+```
+cd docker
+docker-compose up
+```
