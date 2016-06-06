@@ -6,6 +6,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.PropertyInject;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.builder.xml.XPathBuilder;
 
 /**
  * Created by paulcrofts on 6/5/16.
@@ -31,11 +32,16 @@ public class DropboxRoute extends RouteBuilder {
 
     @Override
     public final void configure() throws Exception {
+        // set up transaction splitter
+        XPathBuilder xPathBuilder = new XPathBuilder("//transactions/transaction");
         from(dropboxUri)
                 .routeId("dropbox")
+                .convertBodyTo(String.class)
+                .split(xPathBuilder)
+                .parallelProcessing()
                 .to(toUri)
                 .process(new Processor() {
-                             Thread stop;
+                             private Thread stop;
 
                              @Override
                              public void process(final Exchange exchange) throws Exception {

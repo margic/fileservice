@@ -63,7 +63,8 @@ public class DropboxRouteTest extends CamelTestSupport {
     @Test
     public void testFile() throws Exception {
         MockEndpoint mockEndpoint = getMockEndpoint("mock:mock");
-        mockEndpoint.expectedMessageCount(1);
+        mockEndpoint.expectedMessageCount(2);
+
         assertMockEndpointsSatisfied();
         assertTrue(true);
     }
