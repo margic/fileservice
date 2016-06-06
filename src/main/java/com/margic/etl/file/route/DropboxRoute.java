@@ -1,11 +1,13 @@
 package com.margic.etl.file.route;
 
+import com.margic.etl.file.model.Transaction;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.PropertyInject;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.jacksonxml.JacksonXMLDataFormat;
 
 /**
  * Created by paulcrofts on 6/5/16.
@@ -31,13 +33,16 @@ public class DropboxRoute extends RouteBuilder {
 
     @Override
     public final void configure() throws Exception {
+        JacksonXMLDataFormat txnFormat = new JacksonXMLDataFormat(Transaction.class);
         from(dropboxUri)
                 .routeId("dropbox")
                 .convertBodyTo(String.class)
                 .setProperty("institution", xpath("//header/institution", String.class))
                 .split(xpath("//transactions/transaction"))
                 .parallelProcessing()
+                .convertBodyTo(String.class)
                 .setHeader("institution", exchangeProperty("institution"))
+                .unmarshal(txnFormat)
                 .to(toUri)
                 .process(new Processor() {
                              private Thread stop;
@@ -59,7 +64,11 @@ public class DropboxRoute extends RouteBuilder {
                                      };
                                  }
                                  // start the thread that stops this route
-                                 stop.start();
+                                 /*
+                                  * TODO stop the route after processing the file.
+                                  * will enable this when file change trigger is added
+                                  */
+                                 //stop.start();
                              }
                          }
                 );

@@ -1,5 +1,6 @@
 package com.margic.etl.file.route;
 
+import com.margic.etl.file.model.Transaction;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
@@ -15,6 +16,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by paulcrofts on 6/5/16.
@@ -66,6 +70,25 @@ public class DropboxRouteTest extends CamelTestSupport {
         MockEndpoint mockEndpoint = getMockEndpoint("mock:mock");
         mockEndpoint.expectedHeaderReceived("institution", "ABC");
         mockEndpoint.expectedMessageCount(2);
+
+        List<Object> expectedBodies = new ArrayList<>();
+        // set the expected bodies based on data in sample file
+        // transaction 1
+        expectedBodies.add(Transaction.builder()
+                .merchant("abc")
+                .amount(new BigDecimal("10.00"))
+                .currencyCode("USD")
+                .pan("123").build());
+
+        // transaction 2
+        expectedBodies.add(Transaction.builder()
+                .merchant("abc")
+                .amount(new BigDecimal("11.00"))
+                .currencyCode("USD")
+                .pan("321").build());
+
+
+        mockEndpoint.expectedBodiesReceivedInAnyOrder(expectedBodies);
 
         assertMockEndpointsSatisfied();
         assertTrue(true);

@@ -9,13 +9,13 @@
             <pan>123</pan>
             <merchant>abc</merchant>
             <amount>10.00</amount>
-            <currency>USD</currency>
+            <currencyCode>USD</currencyCode>
         </transaction>
         <transaction>
             <pan>321</pan>
             <merchant>abc</merchant>
             <amount>11.00</amount>
-            <currency>USD</currency>
+            <currencyCode>USD</currencyCode>
         </transaction>
     </transactions>
 </batch>
