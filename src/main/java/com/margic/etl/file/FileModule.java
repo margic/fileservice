@@ -1,6 +1,7 @@
 package com.margic.etl.file;
 
 import com.margic.etl.file.camel.MargicCamelModuleWithMatchingRoutes;
+import com.margic.etl.file.route.DropboxRoute;
 import com.margic.etl.file.route.TransactionRoute;
 
 /**
@@ -15,6 +16,7 @@ class FileModule extends MargicCamelModuleWithMatchingRoutes {
         super.configure();
         // ignore error is binding is required for matchinroutes module
         bind(TransactionRoute.class);
+        bind(DropboxRoute.class);
     }
 
 

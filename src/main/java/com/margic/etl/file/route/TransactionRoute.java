@@ -24,6 +24,7 @@ public class TransactionRoute extends RouteBuilder {
     @Override
     public final void configure() throws Exception {
         from("direct:transaction")
+                .routeId("transaction")
                 .setHeader(Exchange.HTTP_METHOD, constant("POST"))
                 .to(toUri);
     }
