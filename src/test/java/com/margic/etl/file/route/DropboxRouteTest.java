@@ -24,6 +24,7 @@ public class DropboxRouteTest extends CamelTestSupport {
 
     @Override
     protected RoutesBuilder[] createRouteBuilders() throws Exception {
+        context.setTracing(true);
         RoutesBuilder[] routes = new RoutesBuilder[2];
 
         routes[0] = new RouteBuilder() {
@@ -63,6 +64,7 @@ public class DropboxRouteTest extends CamelTestSupport {
     @Test
     public void testFile() throws Exception {
         MockEndpoint mockEndpoint = getMockEndpoint("mock:mock");
+        mockEndpoint.expectedHeaderReceived("institution", "ABC");
         mockEndpoint.expectedMessageCount(2);
 
         assertMockEndpointsSatisfied();
