@@ -1,0 +1,12 @@
+version: '2'
+services:
+  fileservice:
+    image: pcrofts/file-service
+    depends_on:
+      - txnservice
+  txnservice:
+    image: pcrofts/txn-service
+    depends_on:
+      - postgres
+  postgres:
+    image: pcrofts/postgres

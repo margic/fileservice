@@ -41,6 +41,7 @@ public final class CamelFileService extends MainSupport {
         Injector injector = Guice.createInjector(new FileModule());
 
         context = injector.getInstance(CamelContext.class);
+        context.setTracing(true);
 
         instance = new CamelFileService();
         instance.run(args);
